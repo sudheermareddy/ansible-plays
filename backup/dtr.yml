@@ -1,5 +1,5 @@
 ---
-- hosts: firstmanager
+- hosts: dtr01
   become_user: docker
   tasks:
     - name: see if backup file is there
