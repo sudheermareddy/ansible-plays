@@ -1,0 +1,10 @@
+- hosts: dtr01
+  become_user: docker
+  tasks:
+    - name: create the first dtr
+      shell: >
+        curl -k https://192.168.99.101/ca -o /home/QLOUDABLEINC/docker/ca.pem
+    - name: create the first dtr
+      shell: >
+        docker run -d --rm docker/dtr install  --dtr-external-url 192.168.99.105  --ucp-node dtr
+        --ucp-username admin --ucp-password admin123 --ucp-url https://192.168.99.101  --ucp-ca "$(cat /home/QLOUDABLEINC/docker/ca.pem)"

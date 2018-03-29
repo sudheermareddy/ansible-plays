@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: retrieve swarm worker token
+      shell: docker swarm join-token -q worker
+      register: swarm_worker_token
+- hosts: worker
+  become: true
+  vars:
+    token: "{{ hostvars[groups['manager'][0]]['swarm_worker_token']['stdout'] }}"
+    firstmanager: "192.168.99.101"
+  tasks:
+    - name: determine swarm status
+      shell: >
+        docker info | egrep '^Swarm' | cut -d ' ' -f2 | egrep -w active
+      register: result
+      ignore_errors: True
+    - name: Ansible shell register result
+      debug: msg="{{ result.rc}}"
+    - shell: >
+         docker swarm join --token {{ token }} {{ firstmanager }}:2377
+      when: result.rc == 1
+

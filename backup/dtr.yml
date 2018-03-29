@@ -1,0 +1,36 @@
+---
+- hosts: firstmanager
+  become_user: docker
+  tasks:
+    - name: see if backup file is there
+      shell: >
+        ls -ltr /home/QLOUDABLEINC/docker/backup-metadata.tar
+      register: result
+      ignore_errors: True
+    - name: back up previous backfiles
+      shell: >
+         mv /home/QLOUDABLEINC/docker/backup-metadata.tar /home/QLOUDABLEINC/docker/backup-metadata.tar.old
+      when: result.rc == 0
+
+    - name: check for the tar file
+      shell: >
+       curl -k https://ucplb.qloudableinc.com/ca -o /home/QLOUDABLEINC/docker/ca.pem
+
+    - name: backup  dtr
+      shell: >
+       docker run --log-driver none -i --rm 
+       docker/dtr:2.4.3 backup
+       --ucp-url https://ucplb.qloudableinc.com
+       --ucp-username admin
+       --ucp-password Qloud@ble!!
+       --ucp-ca "$( cat /home/QLOUDABLEINC/docker/ca.pem )"
+       --existing-replica-id b7bf68faca81 >/home/QLOUDABLEINC/docker/backup-metadata.tar
+
+    - name: check for the tar file
+      shell: >
+       ls -ltr /home/QLOUDABLEINC/docker/backup-metadata.tar
+      register: backupfile
+
+    - debug: msg="{{  backupfile.stdout_lines }}"
+
+

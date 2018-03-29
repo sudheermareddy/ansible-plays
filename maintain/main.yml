@@ -1,0 +1,6 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: retrieve swarm worker token
+      shell: docker system prune
