@@ -7,6 +7,6 @@
     - { role: restore, when: "ucp_restore is defined" }
     - { role: repair, when: "ucp_repair is defined" }
     - { role: backup, when: "ucp_backup is defined" }
-    - { role: check, when: "icp_check is defined" }
+    - { role: check, when: "ucp_check is defined" }
     - { role: maintain, when: "ucp_maintain is defined" }
     - { role: terminate, when: "ucp_terminate is defined" }
