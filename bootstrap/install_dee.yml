@@ -1,0 +1,16 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: copy docker ee installation script
+      copy:
+        src: /home/QLOUDABLEINC/docker/dockerinstallscript.sh
+        dest: /home/QLOUDABLEINC/docker
+    - name: install and configure docker ee
+      shell: >
+       chmod 700  /home/QLOUDABLEINC/docker/dockerinstallscript.sh
+    - name: install and configure docker ee
+      shell: >
+        /home/QLOUDABLEINC/docker/dockerinstallscript.sh  --version 17.06.2~ee~6-0~ubuntu --url https://storebits.docker.com/ee/m/sub-c53f2e64-6f31-4aa7-af18-3e9a84b2e357 > install.log
+    - name: install and configure docker ee
+      shell: >
+        usermod -aG docker docker

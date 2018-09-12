@@ -1,0 +1,16 @@
+---
+- hosts: dtr02
+  become_user: docker
+  tasks:
+    - name: joins dtrs to the first dtr
+      shell: >
+        curl -k https://prducplb.qloudableinc.com/ca -o $HOME/ca.pem
+    - name: joins dtrs to the first dtr
+      shell: >
+        docker container run -t --rm docker/dtr join
+        --ucp-node $(hostname)
+        --ucp-url https://prducplb.qloudableinc.com
+        --existing-replica-id  d037b653e343
+        --ucp-username "admin"
+        --ucp-password "{{ ucp_admin_pass }}"
+        --ucp-ca "$(cat $HOME/ca.pem)" > dtr02.log 2>&1

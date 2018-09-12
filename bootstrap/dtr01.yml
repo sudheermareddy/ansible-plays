@@ -7,8 +7,7 @@
         docker run -t --rm docker/dtr install
         --ucp-node $( hostname )
         --ucp-username admin
-        --ucp-url "https://prducplb.qloudableinc.com"
+        --ucp-url https://prducplb.qloudableinc.com
         --dtr-external-url "https://prddtrlb.qloudableinc.com"
         --ucp-ca "$( curl -k https://prducplb.qloudableinc.com/ca )"
         --ucp-password  "{{ ucp_admin_pass }}" > dtr01.log 2>&1
-

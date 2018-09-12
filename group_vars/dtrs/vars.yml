@@ -1,0 +1,2 @@
+---
+ucp_admin_pass: "{{ vault_ucp_admin_pass }}"
