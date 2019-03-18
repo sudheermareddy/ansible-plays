@@ -45,6 +45,12 @@
       register: result
     - name: Output
       debug: msg={{ result.stdout_lines }}
+    
+
+- hosts: firstmanager
+  become: yes
+  become_method: sudo
+  tasks:
     - name: Listing node in swarm
       shell:
         docker node ls
