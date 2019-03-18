@@ -1,0 +1,79 @@
+---
+
+- hosts: firstmanager
+  become: yes
+  become_method: sudo
+  vars_prompt:
+    - name: "nodename"
+      prompt: "Enter the hostname of the Manager node which you want to remove?"
+      private: No
+  tasks:
+    - name: Listing Node from swarm
+      shell:
+        docker node ls -f name={{ nodename }} --format \{\{\.ID\}\}
+      register: nodeid
+      ignore_errors: True
+    - name: Output
+      debug: msg={{ nodeid.stdout_lines }}
+    - name: Removing Node from swarm
+      shell:
+        docker node demote {{ nodeid.stdout }}
+      register: output
+      ignore_errors: True
+    - name: Output
+      debug: msg={{ output.stdout_lines }}
+
+
+- hosts: localhost
+  become: yes
+  become_method: sudo
+  vars_prompt:
+  - name: target_host
+    prompt: Enter the host IP of the Manager node which you want to remove from the swarm
+    private: No
+  tasks:
+    - add_host:
+        name: "{{ target_host }}"
+        groups: dynamically_created_hosts
+
+- hosts: dynamically_created_hosts
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Leaving node from swarm
+      shell:
+        docker swarm leave
+      register: output
+      ignore_errors: True
+    - name: Output
+      debug: msg={{ output.stdout_lines }}
+
+- hosts: firstmanager
+  become: yes
+  become_method: sudo
+  vars_prompt:
+    - name: "nodename"
+      prompt: "Enter the hostname of the Manager node which you want to remove?"
+      private: No
+  tasks:
+    - name: Retrieving Node ID from swarm
+      shell:
+        docker node ls -f name={{ nodename }} --format \{\{\.ID\}\}
+      register: nodeid
+      ignore_errors: True
+    - name: Output
+      debug: msg={{ nodeid.stdout_lines }}
+    - name: Removing Node from swarm
+      shell:
+        docker node rm {{ nodeid.stdout }}
+      register: output
+      ignore_errors: True
+    - name: Output
+      debug: msg={{ output.stdout_lines }}
+    - name: Listing node in swarm
+      shell:
+        docker node ls
+      register: output
+      ignore_errors: True
+    - name: Output
+      debug: msg={{ output.stdout_lines }}

@@ -1,0 +1,12 @@
+---
+- hosts: servers
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Docker Pruning
+      shell:
+        docker system prune -f
+      register: output
+      ignore_errors: True
+    - name: Output
+      debug: msg={{ output.stdout_lines }}

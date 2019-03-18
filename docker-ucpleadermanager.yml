@@ -1,0 +1,15 @@
+---
+- hosts: firstmanager
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Creating First UCP Manager
+      shell:
+        docker container run --rm -it --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:2.2.14 install --host-address 10.10.20.2 --admin-username admin --admin-password password1 --san ucpdr.qloudableincdr.com > ucp.log 2>&1
+    - name: Display Logs
+      shell: 
+        cat ucp.log
+      register: output
+      ignore_errors: True
+    - name: Output
+      debug: msg={{ output.stdout_lines }}

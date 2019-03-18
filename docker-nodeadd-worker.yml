@@ -1,0 +1,54 @@
+---
+
+- hosts: firstmanager
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Retrieving swarm manager token
+      shell: docker swarm join-token -q worker
+      register: swarm_worker_token
+      ignore_errors: True
+    - name: Ansible shell register output
+      debug: msg={{ swarm_worker_token.stdout_lines }}
+
+- hosts: localhost
+  become: yes
+  become_method: sudo
+  vars_prompt:
+  - name: target_host
+    prompt: Enter the host IP of the node which you want to join to the swarm
+    private: No
+  tasks:
+    - add_host:
+        name: "{{ target_host }}"
+        groups: dynamically_created_hosts
+
+- hosts: dynamically_created_hosts
+  become: yes
+  become_method: sudo     
+  vars:
+    token: "{{ hostvars[groups['firstmanager'][0]]['swarm_worker_token']['stdout'] }}"
+    firstmanager: "10.10.20.2"
+  tasks:
+    - name: Determine swarm status
+      shell:
+        docker info | egrep '^Swarm' | cut -d ' ' -f2 | egrep -w active
+      register: output
+      ignore_errors: True
+    - name: Ansible shell register output
+      debug: msg={{ output.rc }}
+    - name: Joining Workers to Swarm
+      shell: 
+         docker swarm join --token {{ token }} {{ firstmanager }}:2377
+      when: output.rc == 1
+      ignore_errors: True
+      register: result
+    - name: Output
+      debug: msg={{ result.stdout_lines }}
+    - name: Listing node in swarm
+      shell:
+        docker node ls
+      register: output
+      ignore_errors: True
+    - name: Output
+      debug: msg={{ output.stdout_lines }}

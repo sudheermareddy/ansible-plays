@@ -1,0 +1,12 @@
+---
+- hosts: servers
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Determine Os Details
+      shell:
+        hostnamectl
+      register: output
+      ignore_errors: True
+    - name: Output
+      debug: msg={{ output.stdout_lines }}
