@@ -27,6 +27,6 @@ othermanagers
 
 [all:vars]
 ansible_ssh_port=2002
-ansible_ssh_user=chefuser
+ansible_ssh_user=dockeruser
 ansible_ssh_pass=Sysgain@1234
 
