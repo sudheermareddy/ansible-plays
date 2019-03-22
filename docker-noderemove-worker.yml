@@ -1,10 +1,35 @@
 ---
+
+- hosts: firstmanager
+  become: yes
+  become_method: sudo
+  vars_prompt:
+    - name: "nodename"
+      prompt: "Enter the hostname of the Worker node which you want to remove:"
+      private: No
+  tasks:
+    - name: Listing Nodes from swarm
+      shell:
+        docker node ls -f name={{ nodename }} --format \{\{\.ID\}\}
+      register: nodeid
+      ignore_errors: True
+    - name: Output
+      debug: msg={{ nodeid.stdout_lines }}
+    - name: Draining Node... 
+      shell:
+        docker node update --availability {{ nodeid.stdout }}
+      register: output
+      ignore_errors: True
+    - name: Output
+      debug: msg={{ output.stdout_lines }}
+
+
 - hosts: localhost
   become: yes
   become_method: sudo
   vars_prompt:
   - name: target_host
-    prompt: Enter the host IP of the Worker node which you want to remove from the swarm
+    prompt: "Enter the host IP of the Worker node which you want to remove from the swarm:"
     private: No
   tasks:
     - add_host:
@@ -28,7 +53,7 @@
   become_method: sudo
   vars_prompt:
     - name: "nodename"
-      prompt: "Enter the hostname of the Worker node which you want to remove?"
+      prompt: "Enter the hostname of the Worker node which you want to remove:"
       private: No
   tasks:
     - name: Retrieving Node ID from swarm

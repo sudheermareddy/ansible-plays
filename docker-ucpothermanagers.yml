@@ -13,9 +13,12 @@
 - hosts: othermanagers
   become: yes
   become_method: sudo     
+  vars_prompt:
+    - name: firstmanager
+      prompt: "Enter Leader Managers Host IP address:"
   vars:
     token: "{{ hostvars[groups['firstmanager'][0]]['swarm_manager_token']['stdout'] }}"
-    firstmanager: "10.10.20.2"
+    
   tasks:
     - name: Determine swarm status
       shell:

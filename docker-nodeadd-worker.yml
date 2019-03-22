@@ -16,7 +16,7 @@
   become_method: sudo
   vars_prompt:
   - name: target_host
-    prompt: Enter the host IP of the node which you want to join to the swarm
+    prompt: "Enter the host IP of the node which you want to join to the swarm:"
     private: No
   tasks:
     - add_host:
@@ -25,10 +25,13 @@
 
 - hosts: dynamically_created_hosts
   become: yes
-  become_method: sudo     
+  become_method: sudo    
+  vars_prompt:
+    - name: firstmanager
+      prompt: "Enter Leader Managers Host IP address:" 
   vars:
     token: "{{ hostvars[groups['firstmanager'][0]]['swarm_worker_token']['stdout'] }}"
-    firstmanager: "10.10.20.2"
+    
   tasks:
     - name: Determine swarm status
       shell:
@@ -45,12 +48,6 @@
       register: result
     - name: Output
       debug: msg={{ result.stdout_lines }}
-    
-
-- hosts: firstmanager
-  become: yes
-  become_method: sudo
-  tasks:
     - name: Listing node in swarm
       shell:
         docker node ls
