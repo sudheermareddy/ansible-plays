@@ -3,9 +3,9 @@
   become: yes
   become_method: sudo
   tasks:
-    - name: Determine Os Details
+    - name: iptables_flush
       shell:
-        hostnamectl
+        iptables -F
       register: output
       ignore_errors: True
     - name: Output
