@@ -2,10 +2,13 @@
 - hosts: firstmanager
   become: yes
   become_method: sudo
+  vars_prompt:
+    - name: firstmanager
+      prompt: "Enter Leader Managers Host IP address:"
   tasks:
     - name: Creating First UCP Manager
       shell:
-        docker container run --rm -it --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:2.2.14 install --host-address 10.10.20.2 --admin-username admin --admin-password password1 --san ucpdr.qloudableincdr.com > ucp.log 2>&1
+        docker container run --rm -it --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:2.2.14 install --host-address {{firstmanager }} --admin-username admin --admin-password password1 --san ucpdr.qloudableincdr.com > ucp.log 2>&1
     - name: Display Logs
       shell: 
         cat ucp.log
