@@ -16,6 +16,7 @@
   vars_prompt:
     - name: firstmanager
       prompt: "Enter Leader Managers Host IP address:"
+      private: No
   vars:
     token: "{{ hostvars[groups['firstmanager'][0]]['swarm_manager_token']['stdout'] }}"
     
