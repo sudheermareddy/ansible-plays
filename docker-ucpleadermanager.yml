@@ -11,7 +11,7 @@
   tasks:
     - name: Creating First UCP Manager
       shell:
-        docker container run --rm -it --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:2.2.14 install --host-address {{ firstmanager }} --admin-username admin --admin-password {{ adminpassword }} --san ucpdr.qloudableincdr.com > ucp.log 2>&1
+        docker container run --rm -it --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp:2.2.17 install --host-address {{ firstmanager }} --admin-username admin --admin-password {{ adminpassword }} --san ucpdr.qloudableincdr.com > ucp.log 2>&1
     - name: Display Logs
       shell: 
         cat ucp.log
