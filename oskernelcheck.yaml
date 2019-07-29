@@ -1,0 +1,15 @@
+---
+-   hosts: kernel_check
+    sudo: yes
+    connection: ssh
+    gather_facts: no
+    tasks:
+             - name: checking OS & Kernel Version
+               shell:  os_version=`hostnamectl | sed -n 's/.*Ubuntu //p'`; kernel_version=`hostnamectl | sed -n 's/.*Linux //p'`; echo "Current OS Version ${os_version} , Current Kernel version  ${kernel_version}" > /tmp/log.txt; if  [ "${kernel_version}" != "4.4.0-154-generic" ] || [ "${os_version}" != "16.04.6 LTS" ]; then echo "$(date)  $(hostname) Os or kernel version not matching" >> /tmp/log.txt; fi
+             - name: fetch logfile
+               fetch:
+                   src: /tmp/log.txt
+                   dest: /tmp
+
+             - name: copy logs
+               local_action: shell  cat /tmp/{{ inventory_hostname }}/tmp/log.txt | grep not >> /var/log/os-kernal-check.log ; sudo rm -rf /tmp/{{ inventory_hostname }}

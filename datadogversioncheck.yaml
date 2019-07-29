@@ -1,0 +1,15 @@
+---
+-   hosts: kernel_check
+    sudo: yes
+    connection: ssh
+    gather_facts: no
+    tasks:
+             - name: checking datadog agent Version
+               shell: datadog_version=`docker exec -it datadog-agent agent version`; echo "Current OS Version ${datadog_version}" > /tmp/log1.txt; if  [ "${datadog_version}" != "6.12.0" ]; then echo "$(date)  $(hostname)  datadog-agent version not matching" >> /tmp/log1.txt; fi
+             - name: fetch logfile
+               fetch:
+                   src: /tmp/log1.txt
+                   dest: /tmp
+
+             - name: copy logs
+               local_action: shell  cat /tmp/{{ inventory_hostname }}/tmp/log1.txt | grep not >> /var/log/datadog-agent-check.log ; sudo rm -rf /tmp/{{ inventory_hostname }}
