@@ -1,0 +1,14 @@
+---
+- hosts: chef-nodes
+  connection: ssh
+  gather_facts: False
+  vars_files:
+   - 'vars.yml'
+#
+  become: yes
+  tasks:
+    - name: OSKernelCheck
+      become: yes
+      shell: id -u node_exporter &>/dev/null || sudo useradd node_exporter -s /sbin/nologin; mkdir node_exporter; cd node_exporter; sudo wget https://github.com/prometheus/node_exporter/releases/download/v0.15.2/node_exporter-0.15.2.linux-amd64.tar.gz; sudo tar xvfz node_exporter-*.*-amd64.tar.gz; sudo cp node_exporter-*.*-amd64/node_exporter /usr/sbin/;  sudo echo -e "[Unit]\nDescription=Node Exporter\n\n[Service]\nUser=node_exporter\nEnvironmentFile=/etc/sysconfig/node_exporter\nExecStart=/usr/sbin/node_exporter $OPTIONS\n\n[Install]\nWantedBy=multi-user.target" | sudo  tee  /etc/systemd/system/node_exporter.service; sudo mkdir -p /etc/sysconfig; echo  "OPTIONS=\"--collector.textfile.directory /var/lib/node_exporter/textfile_collector\"" | sudo tee /etc/sysconfig/node_exporter; sudo systemctl daemon-reload; sudo systemctl enable node_exporter; sudo systemctl start node_exporter
+      register: output
+      # - debug: var=output
