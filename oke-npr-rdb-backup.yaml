@@ -1,0 +1,16 @@
+---
+- hosts: oke-rdb-nodes
+  connection: ssh
+  gather_facts: False
+#    # vars:
+#      #   - MyMessage: "Welcome to Ansible World!!"
+  vars_files:
+    - 'vars.yml'
+#
+  become: yes
+  tasks:
+    - name: OKE NPR RDB backup
+      become: yes
+      script: /home/ansibleuser/ansible/playbooks/scripts/oke-npr-rdb-backup.sh
+      register: output
+      # - debug: var=output
