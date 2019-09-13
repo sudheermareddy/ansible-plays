@@ -1,0 +1,12 @@
+---
+- hosts: oke-rdb-nodes
+  connection: ssh
+  gather_facts: False
+  vars_files:
+    - 'vars.yml'
+  become: yes
+  tasks:
+    - name: OKE PRD RDB backup
+      become: yes
+      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/oke-prd-tlrdb-upload.sh
+      register: output
