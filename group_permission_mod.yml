@@ -1,0 +1,15 @@
+---
+- hosts: chef-nodes
+  gather_facts: False
+#    # vars:
+#      #   - MyMessage: "Welcome to Ansible World!!"
+  vars_files:
+    - 'vars.yml'
+#
+  become: yes
+  tasks:
+    - name: Modify Group Permissions
+      become: true
+      command: usermod -aG sudo varaprasadvs
+      #register: output
+      #- debug: var=output.stdout_lines
