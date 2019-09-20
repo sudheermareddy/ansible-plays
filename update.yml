@@ -1,0 +1,13 @@
+---
+- hosts: worker-nodes
+#  gather_facts: False
+#    # vars:
+#      #   - MyMessage: "Welcome to Ansible World!!"
+  vars_files:
+    - 'vars.yml'
+#
+  become: yes
+  tasks:
+    - name: Update apt packages
+      become: true
+      apt: update_cache=true
