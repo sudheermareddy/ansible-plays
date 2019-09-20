@@ -1,0 +1,12 @@
+---
+- hosts: gfs-nodes
+  remote_user: root
+  vars_files:
+    - 'vars.yml'
+  become: yes
+  tasks:
+    - name: install datadog-agent
+      become: true
+      command: ansible-galaxy install datadog.datadog
+      register: output
+      ignore_errors: True
