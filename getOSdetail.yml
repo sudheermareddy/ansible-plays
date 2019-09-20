@@ -1,0 +1,13 @@
+---
+- hosts: ASHNPRAD1CFS01
+  #gather_facts: False
+  #  vars_files:
+          #   - '/home/QLOUDABLEINC/automationuser/ansible/playbooks/vars.yml'
+#
+  become: true
+  tasks:
+    - name: GetHostOSDetails
+      become: true
+      command: hostnamectl
+      register: output
+    - debug: var=output.stdout_lines
