@@ -1,0 +1,11 @@
+---
+- hosts: okenodes
+  become: true
+  vars_files:
+    - 'vars.yml'
+  tasks:
+    - name: Docker Syetm prune
+      become: true
+      command: docker system prune -fa
+      register: output
+    - debug: var=output.stdout_lines
