@@ -1,0 +1,21 @@
+---
+- hosts: ASHNPRAD3JNK03
+  gather_facts: False
+#    # vars:
+#      #   - MyMessage: "Welcome to Ansible World!!"
+  vars_files:
+    - 'vars.yml'
+#
+  become: yes
+  tasks:
+    - name: Change ownership of a folder
+      file:
+        path: "/home/QLOUDABLEINC/srekapalli"
+        state: directory
+        owner: srekapalli
+        group: docker
+        mode: 0755
+        recurse: yes
+      become: true
+      #register: output
+      #- debug: var=output.stdout_lines
