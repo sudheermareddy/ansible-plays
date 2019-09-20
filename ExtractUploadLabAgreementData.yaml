@@ -1,0 +1,13 @@
+---
+- hosts: rdb-nodes
+  connection: ssh
+  gather_facts: False
+  vars_files:
+    - 'vars.yml'
+  become: yes
+  tasks:
+    - name: NPR RDB labagreement upload
+      become: yes
+      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/ExtractUploadLabAgreementData.sh
+      register: output
+    - debug: var=output
