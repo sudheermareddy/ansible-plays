@@ -1,0 +1,50 @@
+---
+- hosts: worker-nodes
+  gather_facts: False
+#    # vars:
+#      #   - MyMessage: "Welcome to Ansible World!!"
+  vars_files:
+    - 'vars.yml'
+#
+  become: yes
+  tasks:
+    - stat: path=/etc/uptrack/uptrack.conf
+      register: st
+
+    - name: Download package
+      become: true
+      get_url: url=https://www.ksplice.com/uptrack/install-uptrack-oc dest=/tmp/install-uptrack-oc mode=0755
+      #shell: wget -N https://www.ksplice.com/uptrack/install-uptrack-oc
+      register: dwnoutput
+      ignore_errors: True
+      when: not st.stat.exists
+    - debug: msg="{{dwnoutput.msg}}"
+
+    - name: Install package if file exists
+      become: true
+      command: sh /tmp/install-uptrack-oc
+      #shell: echo "hello"
+      register: installout
+      ignore_errors: True
+    - debug: msg="{{installout.stdout_lines}}"
+
+    - name: Remove file if exists
+      become: true
+      file:
+        path=/tmp/install-uptrack-oc
+        state=absent
+      #command: rm -f /tmp/install-uptrack-oc
+      #shell: echo "hello"
+      #when: output.stdout == "install-uptrack-oc"
+      register: rmoutput
+      ignore_errors: True
+    - debug: msg="{{rmoutput}}"
+
+    - name: Check the results
+      become: true
+      command: /usr/sbin/uptrack-upgrade -y
+      #shell : uptrack-upgrade
+      #shell: echo "hello"
+      register: results
+      ignore_errors: True
+    - debug: msg="{{results.stdout}}"
