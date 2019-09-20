@@ -1,32 +1,90 @@
-[servers]
-10.10.20.2
-10.10.21.2
-10.10.22.2
-10.10.26.2
-10.10.27.2
-10.10.28.2
+[nodes]
+ASHNPRAD1UCP01
+ASHNPRAD2UCP02
+ASHNPRAD3UCP03
+ASHNPRAD1WRK01
+ASHNPRAD2WRK02
+ASHNPRAD3WRK03
+ASHNPRAD1WRK04
+ASHNPRAD2WRK05
+ASHNPRAD1JNK01
+ASHNPRAD2JNK02
+ASHNPRAD3JNK03
+ASHNPRAD1RDB01
+ASHNPRAD2RDB02
+ASHNPRAD3RDB03
 
-[firstmanager]
-10.10.20.2
+[oke-nodes]
+ASHOKEAD1RDB01
+ASHOKEAD2RDB02
+ASHOKEAD3RDB03
+ASHOKEAD1BLD01
+ASHOKEAD2BLD02
 
-[othermanagers]
-10.10.21.2
-10.10.22.2
+[oke-qld]
+10.12.28.8
+10.12.26.8
+10.12.27.11
+10.12.26.7
 
-[workers]
-10.10.26.2
-10.10.27.2
-10.10.28.2
+[chef-nodes]
+ASHNPRAD1CFS01
+ASHNPRAD1CFW01
+ASHNPRAD2CFW02
 
-[managers:children]
-firstmanager
-othermanagers
+#[local]
+#ASHNPRAD2CFW02 ansible_connection=local
 
-[dynamically_created_hosts]
+[ucp-nodes]
+ASHNPRAD1UCP01
+ASHNPRAD2UCP02
+ASHNPRAD3UCP03
 
+[worker-nodes]
+ASHNPRAD1WRK01
+ASHNPRAD2WRK02
+ASHNPRAD3WRK03
+ASHNPRAD1WRK04
+ASHNPRAD2WRK05
+
+[jenkin-nodes]
+ASHNPRAD1JNK01
+ASHNPRAD2JNK02
+ASHNPRAD3JNK03
+
+[rdb-nodes]
+ASHNPRAD3RDB03
+
+[oke-rdb-nodes]
+#ASHOKEAD1RDB01
+#ASHOKEAD2RDB02
+ASHOKEAD3RDB03
+
+
+[oke-bld-nodes]
+ASHOKEAD1BLD01
+ASHOKEAD2BLD02
+
+#[build-nodes]
+#ASHNPRAD1BLD01
+#ASHNPRAD2BLD02
+
+[docker-nodes:children]
+ucp-nodes
+worker-nodes
+
+[okenodes]
+10.12.26.11 ansible_ssh_user=chefuser ansible_ssh_port=22 ansible_ssh_pass={{password1}}
+10.12.28.8 ansible_ssh_user=chefuser ansible_ssh_port=22 ansible_ssh_pass={{password1}}
+10.12.26.8 ansible_ssh_user=chefuser ansible_ssh_port=22 ansible_ssh_pass={{password1}}
+10.12.26.7 ansible_ssh_user=chefuser ansible_ssh_port=22 ansible_ssh_pass={{password1}}
+
+[node]
+10.11.20.2
 
 [all:vars]
+ansible_ssh_user=automationuser
 ansible_ssh_port=2002
-ansible_ssh_user=dockeruser
-ansible_ssh_pass=Sysgain@1234
-
+#ansible_connection=local
+ansible_ssh_pass={{password}}
+#ansible_ssh_pass={{okepassword}}
