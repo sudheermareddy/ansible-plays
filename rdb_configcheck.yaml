@@ -1,0 +1,15 @@
+---
+- hosts: rdbconfignodes
+  connection: ssh
+  gather_facts: False
+  vars_files:
+   - 'vars.yml'
+#
+  become: yes
+  tasks:
+    - name: RDB config check
+      become: yes
+      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/rdb-configcheck.sh
+      register: output
+      failed_when: '"error" in output.stdout'
+    - debug: var=output
