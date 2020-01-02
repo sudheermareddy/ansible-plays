@@ -1,0 +1,17 @@
+---
+- hosts: pv-node
+  connection: ssh
+  gather_facts: False
+#    # vars:
+#      #   - MyMessage: "Welcome to Ansible World!!"
+  vars_files:
+   - 'vars.yml'
+#
+  become: yes
+  tasks:
+    - name: pvdiskusagecheck
+      become: yes
+      shell: prompv=`df -hl /dev/sdc | awk '{ print $5 " " $1 }'| cut -f1 -d '%'| sed -n 2p`; grafanapv=`df -hl /dev/sdb | awk '{ print $5 " " $1 }'| cut -f1 -d '%'| sed -n 2p`; echo current prometheuspv diskused space $prompv% , Current grafanapv diskused space  $grafanapv%; if  [ "$prompv" -ge 80 ] || [ "$grafanapv" -ge 70 ] ; then echo pv disk usage crossing threshold; exit 1; fi
+
+      register: output
+    - debug: var=output.stdout_lines
