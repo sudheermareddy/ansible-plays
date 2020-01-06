@@ -1,0 +1,17 @@
+---
+- hosts: oke-tlrdb-node
+  connection: ssh
+  gather_facts: False
+  vars_files:
+    - 'vars.yml'
+  become: yes
+  tasks:
+    - name: OKE NPR RDB backup
+      become: yes
+      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/oke-prd-rdb-cleanuppaidtenant.sh
+      register: output
+      failed_when: '"Error" in output.stdout'
+    - debug: var=output
+
+
+

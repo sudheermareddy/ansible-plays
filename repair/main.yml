@@ -1,3 +1,0 @@
----
-- import_tasks: manager.yml
-- import_tasks: worker.yml

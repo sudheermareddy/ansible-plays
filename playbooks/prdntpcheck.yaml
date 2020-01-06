@@ -1,0 +1,15 @@
+---
+- hosts: nodes
+  connection: ssh
+  gather_facts: False
+  vars_files:
+   - 'vars.yml'
+  become: yes
+  tasks:
+   - name: verify ntp service
+     command: service ntp status
+     changed_when: false
+     register: output
+     failed_when: '"inactive" in output.stdout'
+   - debug: var=output
+      #

@@ -1,0 +1,13 @@
+---
+- hosts: oke-dlrdb-node
+  connection: ssh
+  gather_facts: False
+  vars_files:
+    - 'vars.yml'
+  become: yes
+  tasks:
+   - name: OKE PRD DLRDB Cleanup
+     become: yes
+     script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/oke-db-rdb-cleanup.sh
+     register: output
+     failed_when: '"Error" in output.stdout'

@@ -1,0 +1,67 @@
+[nodes]
+ASHPOKEAD1JNK01
+ASHPOKEAD2BLD02
+ASHPOKEAD3RDB06
+ASHPOKEAD2RDB05
+ASHPOKEAD1RDB04
+PHXPOKEAD2RDB05
+PHXPOKEAD1RDB04
+PHXPOKEAD2RDB15
+PHXPOKEAD1RDB14
+ASHPOKEAD3RDB13
+ASHPOKEAD1RDB11
+ASHPOKEAD2RDB12
+
+[jenkin-nodes]
+ASHPOKEAD1JNK01
+
+[oke-db-node]
+ASHPOKEAD3RDB06
+
+[oke-rdb-nodes]
+ASHPOKEAD3RDB06
+ASHPOKEAD2RDB05
+ASHPOKEAD1RDB04
+PHXPOKEAD2RDB05
+PHXPOKEAD1RDB04
+PHXPOKEAD2RDB15
+PHXPOKEAD1RDB14
+ASHPOKEAD3RDB13
+ASHPOKEAD1RDB11
+ASHPOKEAD2RDB12
+
+#[oke-paid-tl-db]
+
+
+[oke-tlrdb-node]
+ASHPOKEAD3RDB06
+
+[oke-dlrdb-node]
+ASHPOKEAD3RDB13
+
+
+[oke-bld-nodes]
+ASHPOKEAD2BLD02
+
+#[docker-nodes:children]
+#ucp-nodes
+#worker-nodes
+
+[pv-node]
+10.13.26.15 ansible_ssh_user=chefuser ansible_ssh_port=22 ansible_ssh_pass={{password1}}
+
+[okenodes]
+10.13.27.9 ansible_ssh_user=chefuser ansible_ssh_port=22 ansible_ssh_pass={{password1}}
+10.13.26.16 ansible_ssh_user=chefuser ansible_ssh_port=22 ansible_ssh_pass={{password1}}
+10.13.28.3 ansible_ssh_user=chefuser ansible_ssh_port=22 ansible_ssh_pass={{password1}}
+10.13.26.15 ansible_ssh_user=chefuser ansible_ssh_port=22 ansible_ssh_pass={{password1}}
+
+[node]
+10.11.20.2
+
+[all:vars]
+ansible_ssh_user=automationuser
+ansible_ssh_port=2002
+ansible_ssh_pass={{password}}
+#ansible_ssh_pass={{okepassword}}
+#127.0.0.1  ansible_connection=local
