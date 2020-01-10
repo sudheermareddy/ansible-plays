@@ -6,8 +6,8 @@
   tasks:
     - name: Docker Syetm prune
       become: true
-      command: docker system prune -fa
+      command: docker system prune -fa 
       register: output
-      #failed_when: '"Error" in output.stdout'
     - debug: var=output.stdout_lines
+
 

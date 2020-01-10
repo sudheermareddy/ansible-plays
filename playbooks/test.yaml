@@ -1,0 +1,23 @@
+---
+- hosts: chef-nodes
+  connection: ssh
+  gather_facts: False
+  vars_files:
+    - 'vars.yml'
+  become: yes
+  tasks:
+    - name: Install apache
+      apt: name=apache2 state=present
+    - name: Go to the folder
+      command: chdir=/etc/apache2/conf-available
+    - name: Replace
+      replace:
+        path: /etc/apache2/conf-available/fqdn.conf 
+        replace: ServerName r20-api-dev-02.fmcgds-np.com
+ 
+      become: yes
+      shell:  ntpq -p | grep 10.11.33.2 | cut -d " " -f1 
+      register: output
+      failed_when: '"10.11.33.2" not  in output.stdout'
+    - debug: var=output
+

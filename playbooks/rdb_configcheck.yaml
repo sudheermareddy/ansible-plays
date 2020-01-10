@@ -1,0 +1,48 @@
+---
+- hosts: rdbconfignodes
+  connection: ssh
+  gather_facts: False
+  vars_files:
+   - 'vars.yml'
+#
+  become: yes
+  tasks:
+    - name: RDB config check
+      become: yes
+      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/rdb-configcheck.sh
+      register: output
+      failed_when: '"error" in output.stdout'
+    - debug: var=output
+
+
+#---
+#- hosts: ASHNPRAD1CFW01
+#  connection: ssh
+#  gather_facts: False
+#  vars_files:
+#   - 'vars.yml'
+#  become: yes
+#  tasks:
+#    - name: verify rdb config check
+#      command: grep -Fxq "runuser=rethinkdb" /etc/dbbackup/db/test.conf; grep -Fxq "test=test" /etc/dbbackup/db/test.conf
+#      register: checkmyconf
+#      check_mode: no
+#      ignore_errors: yes
+#      changed_when: no
+   
+#    - name: Update if /etc/dbbackup/db/test.conf contains "runuser=rethinkdb"; Update if /etc/dbbackup/db/test.conf contains "test=test"
+#      debug: msg="Updated, correct!"
+#      when: checkmyconf.rc == 0
+
+     # register: output
+      #failed_when: '"inactive" in output.stdout'
+   # - debug: var=output
+#    - name: "Ensure /etc/dbbackup/db/test.conf contains 'test=test'"
+#      lineinfile:
+#      name: /etc/dbbackup/db/test.conf
+#      line: "test=test"
+#      state: present
+#      check_mode: yes
+#      register: conf
+#      failed_when: (conf is changed) or (conf is failed)
+#

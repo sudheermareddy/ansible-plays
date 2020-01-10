@@ -1,0 +1,15 @@
+---
+- hosts: oke-nodes 
+  connection: ssh
+  gather_facts: False
+  vars_files:
+   - 'vars.yml'
+  become: yes
+  tasks:
+    - name: NTP SYNC Check
+      shell:  ntpq -p | grep 10.11.33.2 | cut -d " " -f1
+      register: output
+      failed_when: '"10.11.33.2" not  in output.stdout'
+    - debug: var=output
+
+

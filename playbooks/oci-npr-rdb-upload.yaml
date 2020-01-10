@@ -1,0 +1,17 @@
+---
+- hosts: rdb-nodes
+  connection: ssh
+  gather_facts: False
+#    # vars:
+#      #   - MyMessage: "Welcome to Ansible World!!"
+  vars_files:
+    - 'vars.yml'
+#
+  become: yes
+  tasks:
+    - name: NPR RDB backup
+      become: yes
+      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/ociupload.sh
+      register: output
+      # - debug: var=output
+

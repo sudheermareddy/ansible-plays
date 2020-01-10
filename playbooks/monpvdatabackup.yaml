@@ -1,0 +1,25 @@
+---
+- hosts: pv-node
+  gather_facts: False
+#    # vars:
+#      #   - MyMessage: "Welcome to Ansible World!!"
+  vars_files:
+   - 'vars.yml'
+#
+  become: yes
+  tasks:
+    - name: zip folder on remote host
+      become: true
+      archive:
+        path:
+         - /var/lib/kubelet/plugins/kubernetes.io/flexvolume/oracle/oci/mounts/ocid1.volume.oc1.iad.abuwcljshfsru3gnvfrb5a5zejvmpo2icwmyp57lcqcoeh5tx4rxygg5fuxa
+        dest: /var/lib/kubelet/plugins/kubernetes.io/flexvolume/oracle/oci/mounts/pvdatabackup.zip
+        format: zip
+
+    - name: copy file from remote host
+      become: true
+      copy:
+        src: /var/lib/kubelet/plugins/kubernetes.io/flexvolume/oracle/oci/mounts/pvdatabackup.zip
+        dest: /home/ansibleuser/ansible/playbooks/scripts/
+        remote_src: yes
+
