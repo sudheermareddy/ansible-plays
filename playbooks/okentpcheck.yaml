@@ -11,7 +11,6 @@
     - name: verify ntp service
       command: service ntp status
       changed_when: false
-
       register: output
       failed_when: '"inactive" in output.stdout'
     - debug: var=output

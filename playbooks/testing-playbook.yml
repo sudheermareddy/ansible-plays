@@ -6,7 +6,9 @@
     - 'vars.yml'
   become: yes
   tasks:
-    - name: testing 
+    - name: testing echo statement
+      shell: echo testing 
+    - name: testing script
       become: yes
       script: ./playbooks/scripts/test.sh
       register: output
