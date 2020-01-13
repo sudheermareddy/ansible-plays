@@ -1,5 +1,5 @@
 ---
-- hosts: nodes 
+- hosts: oke-nodes 
   connection: ssh
   gather_facts: False
 #    # vars:

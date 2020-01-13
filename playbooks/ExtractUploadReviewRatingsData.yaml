@@ -12,4 +12,4 @@
       register: output
       failed_when: '"Error" in output.stdout'
     - debug: var=output
-
+    - debug: var=output

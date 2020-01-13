@@ -1,2 +1,3 @@
-# ansible-docker
-Automating the qloudable Docker.
+# Ansible Playbooks
+
+This repository contains `Ansible Playbooks` for `Qloudable`.

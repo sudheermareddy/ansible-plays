@@ -6,7 +6,6 @@
 #      #   - MyMessage: "Welcome to Ansible World!!"
   vars_files:
     - 'vars.yml'
-#
   become: yes
   tasks:
     - name: OKE NPR RDB backup
@@ -15,4 +14,3 @@
       register: output
       failed_when: '"Error" in output.stdout'
     - debug: var=output
-

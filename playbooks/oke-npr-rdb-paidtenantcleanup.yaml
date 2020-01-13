@@ -6,7 +6,6 @@
 #      #   - MyMessage: "Welcome to Ansible World!!"
   vars_files:
     - 'vars.yml'
-#
   become: yes
   tasks:
     - name: OKE NPR RDB backup
@@ -14,4 +13,3 @@
       script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/oke-npr-rdb-cleanuppaidtenant.sh
       register: output
     - debug: var=output
-

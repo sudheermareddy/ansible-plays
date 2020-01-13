@@ -11,5 +11,3 @@
       register: output
       failed_when: '"10.11.33.2" not  in output.stdout'
     - debug: var=output
-
-

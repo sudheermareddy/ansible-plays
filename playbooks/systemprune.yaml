@@ -9,5 +9,3 @@
       command: docker system prune -fa 
       register: output
     - debug: var=output.stdout_lines
-
-

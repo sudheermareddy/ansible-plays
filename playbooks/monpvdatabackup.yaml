@@ -22,4 +22,3 @@
         src: /var/lib/kubelet/plugins/kubernetes.io/flexvolume/oracle/oci/mounts/pvdatabackup.zip
         dest: /home/ansibleuser/ansible/playbooks/scripts/
         remote_src: yes
-

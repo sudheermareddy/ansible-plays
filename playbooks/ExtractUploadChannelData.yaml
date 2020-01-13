@@ -11,4 +11,3 @@
       script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/ExtractUploadChannelData.sh
       register: output
     - debug: var=output
-

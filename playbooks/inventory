@@ -1,71 +1,6 @@
-[nodes]
-ASHNPRAD1UCP01
-ASHNPRAD2UCP02
-ASHNPRAD3UCP03
-ASHNPRAD1WRK01
-ASHNPRAD2WRK02
-ASHNPRAD3WRK03
-ASHNPRAD1WRK04
-ASHNPRAD2WRK05
+[jenkins-nodes]
 ASHNPRAD1JNK01
 ASHNPRAD2JNK02
-ASHNPRAD3JNK03
-ASHNPRAD1RDB01
-ASHNPRAD2RDB02
-ASHNPRAD3RDB03
-
-[oke-nodes]
-ASHOKEAD1RDB01
-ASHOKEAD2RDB02
-ASHOKEAD3RDB03
-ASHOKEAD1BLD01
-ASHOKEAD2BLD02
-
-[oke-qld]
-10.12.28.12
-10.12.27.22
-10.12.28.11
-10.12.27.21
-10.12.26.27
-10.12.26.28
-
-#10.12.28.8
-#10.12.26.8
-#10.12.27.11
-#10.12.26.7
-
-[chef-nodes]
-ASHNPRAD1CFS01
-ASHNPRAD1CFW01
-ASHNPRAD2CFW02
-
-#[local]
-#ASHNPRAD2CFW02 ansible_connection=local
-
-[ucp-nodes]
-ASHNPRAD1UCP01
-ASHNPRAD2UCP02
-ASHNPRAD3UCP03
-
-[worker-nodes]
-ASHNPRAD1WRK01
-ASHNPRAD2WRK02
-ASHNPRAD3WRK03
-ASHNPRAD1WRK04
-ASHNPRAD2WRK05
-
-[jenkin-nodes]
-ASHNPRAD1JNK01
-ASHNPRAD2JNK02
-ASHNPRAD3JNK03
-
-[rdb-nodes]
-ASHNPRAD3RDB03
-
-[rdbnodes]
-ASHNPRAD1RDB01
-ASHNPRAD2RDB02
-ASHNPRAD3RDB03
 
 [oke-rdb-nodes]
 ASHOKEAD3RDB03
@@ -75,26 +10,9 @@ ASHOKEAD1RDB01
 ASHOKEAD2RDB02
 ASHOKEAD3RDB03
 
-[rdbconfignodes]
-ASHOKEAD1RDB01
-ASHOKEAD2RDB02
-ASHOKEAD3RDB03
-ASHNPRAD1RDB01
-ASHNPRAD2RDB02
-ASHNPRAD3RDB03
-
-
 [oke-bld-nodes]
 ASHOKEAD1BLD01
 ASHOKEAD2BLD02
-
-#[build-nodes]
-#ASHNPRAD1BLD01
-#ASHNPRAD2BLD02
-
-[docker-nodes:children]
-ucp-nodes
-worker-nodes
 
 [pv-node]
 10.12.26.33 ansible_ssh_user=chefuser ansible_ssh_port=22 ansible_ssh_pass={{password1}}
@@ -106,11 +24,10 @@ worker-nodes
 10.12.28.15 ansible_ssh_user=chefuser ansible_ssh_port=22 ansible_ssh_pass={{password1}}
 10.12.28.16 ansible_ssh_user=chefuser ansible_ssh_port=22 ansible_ssh_pass={{password1}}
 10.12.26.33 ansible_ssh_user=chefuser ansible_ssh_port=22 ansible_ssh_pass={{password1}}
-[node]
-10.11.20.2
 
-[testing]
-10.12.26.33
+[oke-nodes:children]
+oke-bld-nodes
+okerdbnodes
 
 [all:vars]
 ansible_ssh_user=automationuser
@@ -118,4 +35,3 @@ ansible_ssh_port=2002
 #ansible_connection=local
 ansible_ssh_pass={{password}}
 #ansible_ssh_pass={{okepassword}}
-

@@ -1,5 +1,5 @@
 ---
-- hosts: rdb-nodes
+- hosts: okerdbnodes
   gather_facts: False
 #    # vars:
 #      #   - MyMessage: "Welcome to Ansible World!!"

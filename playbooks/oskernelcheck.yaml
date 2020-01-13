@@ -1,19 +1,16 @@
 ---
-- hosts: testing
+- hosts: oke-nodes
   connection: ssh
   gather_facts: False
 #    # vars:
 #      #   - MyMessage: "Welcome to Ansible World!!"
   vars_files:
    - 'vars.yml'
-#
   become: yes
   tasks:
     - name: OSKernelCheck
       become: yes
       shell: name=`hostnamectl | sed -n 's/.*Static //p'`; os_version=$(hostnamectl | sed -n 's/.*Ubuntu //p'); kernel_version=`hostnamectl | sed -n 's/.*Linux //p'`; echo "Current OS Version $os_version , Current Kernel version  $kernel_version"; if  [ $kernel_version != "4.4.0-154-generic" ] && [ $kernel_version != "4.4.0-157-generic" ] || [ $os_version != "16.04.6 LTS" ]; then echo $name Os or kernel version not matching; exit 1; fi
-
       register: output
       failed_when: '"Error" in output.stdout'
     - debug: var=output
-

@@ -1,5 +1,5 @@
 ---
-- hosts: testing
+- hosts: all
   #gather_facts: False
   #  vars_files:
           #   - '/home/QLOUDABLEINC/automationuser/ansible/playbooks/vars.yml'
