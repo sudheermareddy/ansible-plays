@@ -1,4 +1,7 @@
 - hosts:
     - testing
+  vars_files:
+   - 'vars.yml'
+  become: yes
   tasks:
     - action: ping
