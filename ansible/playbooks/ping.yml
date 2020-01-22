@@ -4,4 +4,7 @@
    - 'vars.yml'
   become: yes
   tasks:
-    - action: ping
+    - name: OKE NPR RDB Cleanup
+      become: yes
+      command: echo "hi"
+      register: output
