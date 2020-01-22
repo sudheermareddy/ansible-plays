@@ -10,7 +10,7 @@
       shell: echo testing 
     - name: testing script
       become: yes
-      script: /data01/jenkins/workspace/infra-testing/playbooks/scripts/test.sh
+      script: /data01/jenkins/workspace/infra-testing/ansible/playbooks/scripts/test.sh
       register: output
       failed_when: '"Error" in output.stdout'
     - debug: var=output
