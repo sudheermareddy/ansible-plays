@@ -8,6 +8,6 @@
   tasks:
     - name: NPR RDB Extract
       become: yes
-      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/ExtractUploadChannelData.sh
+      script: ./scripts/ExtractUploadChannelData.sh
       register: output
     - debug: var=output
