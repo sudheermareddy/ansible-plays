@@ -8,7 +8,7 @@
   tasks:
     - name: NPR RDB userTLdata upload
       become: yes
-      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/ExtractUploadUserTLData.sh
+      script: ./scripts/ExtractUploadUserTLData.sh
       register: output
       failed_when: '"Error" in output.stdout'
     - debug: var=output
