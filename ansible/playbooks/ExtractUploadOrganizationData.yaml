@@ -8,7 +8,7 @@
   tasks:
     - name: NPR RDB Oraganizationdata upload
       become: yes
-      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/ExtractUploadOrganizationData.sh
+      script: ./scripts/ExtractUploadOrganizationData.sh
       register: output
       failed_when: '"Error" in output.stdout'
     - debug: var=output
