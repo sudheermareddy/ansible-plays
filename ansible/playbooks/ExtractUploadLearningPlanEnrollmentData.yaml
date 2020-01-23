@@ -8,7 +8,7 @@
   tasks:
     - name: NPR RDB LearningPlanEnrollmentTLdata upload
       become: yes
-      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/ExtractUploadLearningPlanEnrollmentData.sh
+      script: ./scripts/ExtractUploadLearningPlanEnrollmentData.sh
       register: output
       failed_when: '"Error" in output.stdout'
     - debug: var=output
