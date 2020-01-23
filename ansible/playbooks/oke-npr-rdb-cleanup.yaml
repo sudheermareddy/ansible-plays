@@ -10,6 +10,6 @@
   tasks:
     - name: OKE NPR RDB Cleanup
       become: yes
-      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/oke-rdb-cleanup.sh
+      script: ./scripts/oke-rdb-cleanup.sh
       register: output
       # - debug: var=output
