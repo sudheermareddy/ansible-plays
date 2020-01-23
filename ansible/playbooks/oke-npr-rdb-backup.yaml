@@ -10,7 +10,7 @@
   tasks:
     - name: OKE NPR RDB backup
       become: yes
-      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/oke-npr-rdb-backup.sh
+      script: ./scripts/oke-npr-rdb-backup.sh
       register: output
       failed_when: '"Error" in output.stdout'
     - debug: var=output
