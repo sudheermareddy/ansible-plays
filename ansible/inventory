@@ -39,3 +39,4 @@ ansible_ssh_port=2002
 #ansible_connection=local
 ansible_ssh_pass={{password}}
 #ansible_ssh_pass={{okepassword}}
+
