@@ -12,7 +12,7 @@
   tasks:
     - name: pvdiskcleanup
       become: yes
-      shell: find /var/lib/kubelet/plugins/kubernetes.io/flexvolume/oracle/oci/mounts/ocid1.volume.oc1.iad.abuwcljshlw6i6ms4p7endtkhutlrn5qcv5otsv3tpif7ygskj2wc4vqtnlq/ -type -d -mtime +14 -exec rm -rf {} \; 
+      shell: find /var/lib/kubelet/plugins/kubernetes.io/flexvolume/oracle/oci/mounts/ocid1.volume.oc1.iad.abuwcljshlw6i6ms4p7endtkhutlrn5qcv5otsv3tpif7ygskj2wc4vqtnlq/ -type d -mtime +14 | xargs rm -rf 
 
       register: output
     - debug: var=output.stdout_lines
