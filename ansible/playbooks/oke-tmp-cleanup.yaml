@@ -10,6 +10,6 @@
   tasks:
     - name: Cleaning tmp folder
       become: yes
-      shell: rm -rf /tmp/*
+      shell: sudo rm -rf /tmp/*
       register: output
       # - debug: var=output
