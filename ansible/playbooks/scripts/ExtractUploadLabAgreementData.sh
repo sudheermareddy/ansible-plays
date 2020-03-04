@@ -25,8 +25,9 @@ then
         fi
         CURRENT_DATE=`date +%Y,%-m,%-d,%-H,%-M,%-S`
         PREVIOUS_DATE=`date --date "$TIME_DIFFERENCE $TIME_TYPE ago" +%Y,%-m,%-d,%-H,%-M,%-S`
-        /usr/local/bin/recli -h $HOST -p $PORT --json "r.db('$DB_NAME').table('$TABLE_NAME').filter(r.row('updatedDTS').during(r.time($PREVIOUS_DATE,'Z'), r.time($CURRENT_DATE,'Z'))).map(function(row){return row.merge({'updatedDTS' : row('updatedDTS').toISO8601().slice(0,-6), 'createdDTS' : row('createdDTS').toISO8601().slice(0,-6)})})" > "public_$fileName"
-      
+        /usr/local/bin/recli -h $HOST -p $PORT --json "r.db('$DB_NAME').table('$TABLE_NAME').map(function(row){return row.merge({'updatedDTS' : row('updatedDTS').toISO8601().slice(0,-6), 'createdDTS' : row('createdDTS').toISO8601().slice(0,-6)})})" > "public_$fileName"
+        #/usr/local/bin/recli -h $HOST -p $PORT --json "r.db('$DB_NAME').table('$TABLE_NAME').filter(r.row('updatedDTS').during(r.time($PREVIOUS_DATE,'Z'), r.time($CURRENT_DATE,'Z'))).map(function(row){return row.merge({'updatedDTS' : row('updatedDTS').toISO8601().slice(0,-6), 'createdDTS' : row('createdDTS').toISO8601().slice(0,-6)})})" > "public_$fileName"
+
         # /usr/local/bin/recli -h $HOST -p $PORT --json "r.db('$DB_NAME').table('$TABLE_NAME').concatMap( function(row) { return row('channels');}).map(function(row){return row.merge({'updatedDTS' : row('updatedDTS').toISO8601().slice(0,-6), 'createdDTS' : row('createdDTS').toISO8601().slice(0,-6)})})" > "private_$fileName"
         echo "Export finished and Upload to container started"
         
