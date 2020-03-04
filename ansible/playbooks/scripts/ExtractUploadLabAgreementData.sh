@@ -17,13 +17,20 @@ then
         fileNameExt=`date +%Y_%m_%d_%H_%M_%S`
         fileName=$TABLE_NAME"_"$fileNameExt".json"
         echo "Export for data started"
-        /usr/local/bin/recli -h $HOST -p $PORT --json "r.db('$DB_NAME').table('$TABLE_NAME').map( function(row) { return row.merge({'channelId':'public'}).without('channels');}).map(function(row){return row.merge({'updatedDTS' : row('updatedDTS').toISO8601().slice(0,-6), 'createdDTS' : row('createdDTS').toISO8601().slice(0,-6)})})" > "public_$fileName"
+        TIME_TYPE="mins"
+        TIME_DIFFERENCE=240
+        if [ $1 ]
+        then
+                TIME_DIFFERENCE=$1
+        fi
+        CURRENT_DATE=`date +%Y,%-m,%-d,%-H,%-M,%-S`
+        PREVIOUS_DATE=`date --date "$TIME_DIFFERENCE $TIME_TYPE ago" +%Y,%-m,%-d,%-H,%-M,%-S`
+        /usr/local/bin/recli -h $HOST -p $PORT --json "r.db('$DB_NAME').table('$TABLE_NAME').filter(r.row('updatedDTS').during(r.time($PREVIOUS_DATE,'Z'), r.time($CURRENT_DATE,'Z'))).map(function(row){return row.merge({'updatedDTS' : row('updatedDTS').toISO8601().slice(0,-6), 'createdDTS' : row('createdDTS').toISO8601().slice(0,-6)})})" > "public_$fileName"
       
-        /usr/local/bin/recli -h $HOST -p $PORT --json "r.db('$DB_NAME').table('$TABLE_NAME').concatMap( function(row) { return row('channels');}).map(function(row){return row.merge({'updatedDTS' : row('updatedDTS').toISO8601().slice(0,-6), 'createdDTS' : row('createdDTS').toISO8601().slice(0,-6)})})" > "private_$fileName"
+        # /usr/local/bin/recli -h $HOST -p $PORT --json "r.db('$DB_NAME').table('$TABLE_NAME').concatMap( function(row) { return row('channels');}).map(function(row){return row.merge({'updatedDTS' : row('updatedDTS').toISO8601().slice(0,-6), 'createdDTS' : row('createdDTS').toISO8601().slice(0,-6)})})" > "private_$fileName"
         echo "Export finished and Upload to container started"
         
         curl -X PUT -T "public_$fileName" -H "x-ms-date: $(date -u)" -H "x-ms-blob-type: BlockBlob" "https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER_NAME/"public_$fileName"?$SASTOKEN"
-        curl -X PUT -T "private_$fileName" -H "x-ms-date: $(date -u)" -H "x-ms-blob-type: BlockBlob" "https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER_NAME/"private_$fileName"?$SASTOKEN"
         echo "Upload finished"
 else
         echo -e "required ENV variables not set.\n\n required variables: \n\tSTORAGE_ACCOUNT\n\tTABLE_NAME\n\tDB_NAME\n\tCONTAINER_NAME\n\tSASTOKEN"
