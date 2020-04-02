@@ -1,5 +1,5 @@
 ---
-- hosts: oke-rdb-nos
+- hosts: oke-rdb-nodes
 
   connection: ssh
   gather_facts: False
