@@ -11,4 +11,5 @@
   become: yes
   tasks:
     - name: echo
-      shell: echo hi
+      shell: echo 
+      hi
