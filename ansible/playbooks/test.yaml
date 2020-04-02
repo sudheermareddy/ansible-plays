@@ -1,5 +1,5 @@
 ---
-- hosts: node
+- hosts: okerdbnodes
   connection: ssh
   gather_facts: False
 #    # vars:
