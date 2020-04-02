@@ -8,7 +8,7 @@
   tasks:
     - name: PHX PRD RDB AssessmentEnrollmentdata upload
       become: yes
-      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/ExtractUploadAssessmentEnrollmentData.sh
+      script: ./scripts/ExtractUploadAssessmentEnrollmentData.sh
       register: output
       failed_when: '"Error" in output.stdout'
     - debug: var=output

@@ -8,7 +8,7 @@
   tasks:
     - name: PHX PRD RDB Codedata upload
       become: yes
-      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/ExtractUploadChannelCode.sh
+      script: ./scripts/ExtractUploadChannelCode.sh
       register: output
       #failed_when: '"Error" in output.stdout'
     - debug: var=output
