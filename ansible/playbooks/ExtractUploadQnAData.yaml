@@ -1,0 +1,16 @@
+---
+- hosts: oke-rdb-nodes
+  connection: ssh
+  gather_facts: False
+  vars_files:
+    - 'vars.yml'
+  become: yes
+  tasks:
+    - name: PHX PRD RDB QnAdata upload
+      become: yes
+      script: /home/QLOUDABLEINC/automationuser/ansible/playbooks/scripts/ExtractUploadQnAData.sh
+      register: output
+      failed_when: '"Error" in output.stdout'
+    - debug: var=output
+
+
