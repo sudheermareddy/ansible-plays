@@ -25,7 +25,7 @@ then
         CURRENT_DATE=`date +%Y,%-m,%-d,%-H,%-M,%-S`
         PREVIOUS_DATE=`date --date "$TIME_DIFFERENCE $TIME_TYPE ago" +%Y,%-m,%-d,%-H,%-M,%-S`
         echo "Export for data started"
-        /usr/local/bin/recli -h $HOST -p $PORT --json "r.db('$DB_NAME').table('$TABLE_NAME').hasFields('createdDTS','updatedDTS').filter(r.row('updatedDTS').during(r.time($PREVIOUS_DATE,'Z'), r.time($CURRENT_DATE,'Z'))).map(function(row){return row.merge({'createdDTS' : row('createdDTS').toISO8601().slice(0,-6),'updatedDTS' : row('updatedDTS').toISO8601().slice(0,-6),'expiryTime' : row('expiryTime').default(r.time(9999, 12, 31, 'Z')).toISO8601().slice(0,-6),'startTime' : row('startTime').default(r.time(1970, 1, 1, 'Z')).toISO8601().slice(0,-6)})})" > $fileName
+        /usr/local/bin/recli -h $HOST -p $PORT --json "r.db('$DB_NAME').table('$TABLE_NAME').hasFields('createdDTS','updatedDTS').filter(r.row('updatedDTS').during(r.time($PREVIOUS_DATE,'Z'), r.time($CURRENT_DATE,'Z'))).map(function(row){return row.merge({'startTime':(row('startTime').eq('') ? null : row('startTime')) ,'expiryTime':(row('expiryTime').eq('')?null:row('expiryTime'))})}).map(function(row){return row.merge({'createdDTS' : row('createdDTS').toISO8601().slice(0,-6), 'updatedDTS' : row('updatedDTS').toISO8601().slice(0,-6), 'expiryTime' : row('expiryTime').default(r.time(9999, 12, 31, 'Z')).toISO8601().slice(0,-6), 'startTime' : row('startTime').default(r.time(1970, 1, 1, 'Z')).toISO8601().slice(0,-6)})})" > $fileName
         echo "Export finished and Upload to container started"
         curl -X PUT -T $fileName -H "x-ms-date: $(date -u)" -H "x-ms-blob-type: BlockBlob" "https://$STORAGE_ACCOUNT.blob.core.windows.net/$CONTAINER_NAME/$fileName?$SASTOKEN"
         echo "Upload finished"
