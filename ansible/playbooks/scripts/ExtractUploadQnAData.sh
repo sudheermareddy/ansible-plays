@@ -3,7 +3,7 @@ STORAGE_ACCOUNT="tlnprreports"
 SASTOKEN="sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2025-09-17T06:11:42Z&st=2019-09-09T22:11:42Z&spr=https,http&sig=MEuIOdVgQ0nutZtQDsnHH%2BOeGAbq7BEACS3aa9JE%2FBI%3D"
 #STORAGE_ACCOUNT="tlprodreports"
 #SASTOKEN="sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2030-12-31T08:18:51Z&st=2019-11-19T00:18:51Z&spr=https,http&sig=iP0OuY3OXzzRNWH7cwJt7RX6HzdRhCgVugrTSQcwp4g%3D"
-CONTAINER_NAME="tl-reports/qnaMaker"
+CONTAINER_NAME="tl-reports/qna-maker"
 
 HOST="rdbokenprtl"
 #HOST="rdbprtl"
