@@ -11,7 +11,7 @@
     - name: OKE NPR RDB drop existing DB and Restore new DB
       become: yes
       #command: echo {{ RestoreUrl }}
-      script: ./scripts/oke-npr-rdb-restore.sh {{ RestoreUrl }}
+      script: ./scripts/oke-npr-rdb-restore.sh {{ RestoreUrl }} {{ shared }}  {{ replica }}
       register: output
       failed_when: '"Error" in output.stdout'
     - debug: var=output
