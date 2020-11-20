@@ -10,7 +10,8 @@
   tasks:
     - name: OKE NPR RDB drop existing DB and Restore new DB
       become: yes
-      script: ./scripts/oke-npr-rdb-restore.sh {{ RestoreUrl }}
+      command: echo {{ RestoreUrl }}
+      #script: ./scripts/oke-npr-rdb-restore.sh {{ RestoreUrl }}
       register: output
       failed_when: '"Error" in output.stdout'
     - debug: var=output
