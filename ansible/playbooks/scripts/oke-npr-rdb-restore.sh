@@ -1,3 +1,4 @@
 a=$1
 
-echo $a
+echo $a 
+touch /tmp/$a
