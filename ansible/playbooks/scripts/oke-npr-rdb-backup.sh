@@ -17,6 +17,7 @@ sudo rethinkdb dump -e tl_notification -f /data03/backup/ASHOKEAD3RDB03/tl_notif
 sudo rethinkdb dump -e tl_permissions -f /data03/backup/ASHOKEAD3RDB03/tl_permissions_Bak.tar.gz_`date '+%Y-%m-%d'`
 sudo rethinkdb dump -e tl_qloudable_billings -f /data03/backup/ASHOKEAD3RDB03/tl_qloudable_billings_Bak.tar.gz_`date '+%Y-%m-%d'`
 sudo rethinkdb dump -e tl_qloudable_trainings -f /data03/backup/ASHOKEAD3RDB03/tl_qloudable_trainings_Bak.tar.gz_`date '+%Y-%m-%d'`
+sudo rethinkdb dump -e tl_qloudable_assessment -f /data03/backup/ASHOKEAD3RDB03/tl_qloudable_assessment_Bak.tar.gz_`date '+%Y-%m-%d'`
 sudo rethinkdb dump -e tl_terminal -f /data03/backup/ASHOKEAD3RDB03/tl_terminal_Bak.tar.gz_`date '+%Y-%m-%d'`
 sudo rethinkdb dump -e tl_user_management -f /data03/backup/ASHOKEAD3RDB03/tl_user_management_Bak.tar.gz_`date '+%Y-%m-%d'`
 sudo rethinkdb dump -e tl_veegam_appstream -f /data03/backup/ASHOKEAD3RDB03/tl_veegam_appstream_Bak.tar.gz_`date '+%Y-%m-%d'`
