@@ -35,9 +35,6 @@ done < /tmp/bkplist
 fi
 
 
-
-
-
 #a=$1
 #b=$2
 #c=$3
