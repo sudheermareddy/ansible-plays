@@ -1,5 +1,5 @@
 #!/bin/bash
-data_path="/data01/var/lib/rethinkdb/data"
+data_path="/data01/var/lib/rethinkdb/"
 recli "r.dbList()" > $data_path/dblist_current
 if diff $data_path/dblist $data_path/dblist_current > /dev/null
 then
