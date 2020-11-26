@@ -1,5 +1,5 @@
 ---
-- hosts: testing
+- hosts: rdb
   connection: ssh
   gather_facts: False
 #    # vars:
