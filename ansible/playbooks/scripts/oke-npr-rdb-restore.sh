@@ -5,7 +5,8 @@ data_path="/data01/var/lib/rethinkdb/data"
 
 #list dbs
 recli "r.dbList()" | tr -d ,[]|sed $'s/[^[:print:]\t]//g'| sed 's/32m//g'| sed 's/39m//g'|sed '/'rethinkdb'/d' | tr -dc '[:print:]'|sed 's/\s\+/\n/g'|awk 'NF' > /tmp/dblist
-#recli "r.dbList()" | tr -d ,[]' '|sed $'s/[^[:print:]\t]//g'| sed 's/32m//g'| sed 's/39m//g'|sed '/'rethinkdb'/d' |  tr -dc '[:alnum:]\n\r' > /tmp/dblist
+#recli "r.dbList()" | tr -d ,[]' '|sed $'s/[^[:print:]\t]//g'| sed 's/32m//g'| sed 's/39m//g'|sed '/'rethinkdb'/d' > /tmp/dblist
+
 #drop existing dbs
 if cat /tmp/dblist | wc -l < 0; then
  while read p
@@ -35,7 +36,6 @@ do
 echo $p
 q=$(echo $p | awk -F '\\_Bak.tar' '{print $1"_Bak.tar"}' | sed 's/_Bak.tar//')
 rethinkdb restore $p -i $q --shards $shared --replicas $replica --force
-echo $q
 echo "$p db is restored"
 done < /tmp/bkplist
 fi
