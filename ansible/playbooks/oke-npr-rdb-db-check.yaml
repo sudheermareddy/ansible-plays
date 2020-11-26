@@ -1,0 +1,15 @@
+---
+- hosts: testing
+  connection: ssh
+  gather_facts: False
+#    # vars:
+#      #   - MyMessage: "Welcome to Ansible World!!"
+  vars_files:
+   - 'vars.yml'
+  become: yes
+  tasks:
+    - name: Check for changes in RDB DBs
+      script: ./scripts/oke-npr-rdb-db-check.sh
+      register: output
+      failed_when: '"Error" in output.stdout'
+    - debug: var=output
